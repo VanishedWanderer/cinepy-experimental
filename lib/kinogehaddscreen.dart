@@ -57,9 +57,9 @@ class ClippedTabBar extends StatelessWidget {
       TabBar(
         controller: DefaultTabController.of(context),
         tabs: [
-          Tab(icon: Icon(Icons.directions_car, color: Colors.black)),
-          Tab(icon: Icon(Icons.directions_bike, color: Colors.black)),
-          Tab(icon: Icon(Icons.directions_run, color: Colors.black)),
+          Tab(icon: Icon(Icons.directions_car)),
+          Tab(icon: Icon(Icons.directions_bike)),
+          Tab(icon: Icon(Icons.directions_run)),
         ],
       ),
       ClipPath(

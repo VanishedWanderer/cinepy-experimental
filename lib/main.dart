@@ -57,17 +57,13 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-
       floatingActionButton: OpenContainer(
-        transitionType: ContainerTransitionType.fade,
         openBuilder: (BuildContext context, VoidCallback _) {
           return KinoGehAddScreen();
         },
         closedElevation: 6.0,
-        closedShape: const ContinuousRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(56 / 2),
-          ),
+        closedShape: ContinuousRectangleBorder(
+          borderRadius: BorderRadius.circular(56 / 2),
         ),
         closedColor: Theme.of(context).primaryColor,
         closedBuilder: (BuildContext context, VoidCallback openContainer) {
