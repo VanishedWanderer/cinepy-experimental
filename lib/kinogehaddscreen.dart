@@ -1,7 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:helloworld/parallax-tab/parallax-tab-background.dart';
 import 'package:tinycolor/tinycolor.dart';
+
+import 'filmpainter.dart';
 
 class KinoGehAddScreen extends StatefulWidget {
   @override
@@ -20,8 +23,12 @@ class _KinoGehAddScreenState extends State<KinoGehAddScreen> with SingleTickerPr
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-              backgroundColor: Theme.of(context).accentColor,
-              bottomNavigationBar: ClippedTabBar(),
+              backgroundColor: Theme.of(context).primaryColor,
+              bottomNavigationBar: ClippedTabBar(
+                colorBackgroundFilled: TinyColor(Theme.of(context).accentColor).darken(5).color,
+                colorIcon: Colors.white,
+                colorIconFilled: Colors.white,
+              ),
               body: SafeArea(
                 child: Stack(
                   alignment: Alignment.topLeft,
@@ -29,14 +36,13 @@ class _KinoGehAddScreenState extends State<KinoGehAddScreen> with SingleTickerPr
                     Padding(
                       child: ParallaxTabBackground(
                         child: CustomPaint(
-                          painter: YeetPainter(rectColor: TinyColor(Theme.of(context).accentColor).lighten(15).color),
+                          painter: FilmPainter(rectColor: TinyColor(Theme.of(context).primaryColor).darken(15).color),
                           size: Size(MediaQuery.of(context).size.width*2, 20),
                         )
                       ),
                       padding: EdgeInsets.fromLTRB(0, 10, 0, 5),
                     ),
                     TabBarView(
-                      controller: DefaultTabController.of(context),
                       children: [
                         KinoStep(),
                         KinoStep(),
@@ -51,40 +57,66 @@ class _KinoGehAddScreenState extends State<KinoGehAddScreen> with SingleTickerPr
 }
 
 class ClippedTabBar extends StatelessWidget {
+
+  const ClippedTabBar({
+    this.colorIcon,
+    this.colorIconFilled,
+    this.colorBackground = Colors.transparent,
+    this.colorBackgroundFilled
+  }): super();
+
+  final Color colorIcon;
+  final Color colorIconFilled;
+  final Color colorBackground;
+  final Color colorBackgroundFilled;
+
   @override
   Widget build(BuildContext context) {
+    var animMax = DefaultTabController.of(context).length-1;
+    Animation<double> anim = DefaultTabController.of(context).animation;
+
+
     return Stack(children: [
-      TabBar(
-        controller: DefaultTabController.of(context),
-        tabs: [
-          Tab(icon: Icon(Icons.directions_car)),
-          Tab(icon: Icon(Icons.directions_bike)),
-          Tab(icon: Icon(Icons.directions_run)),
-        ],
-      ),
-      ClipPath(
-        clipper: YeetClipper(),
-        child: Material(
-          color: Theme.of(context).primaryColor,
-          child: TabBar(
-            controller: DefaultTabController.of(context),
-            tabs: [
-              Tab(icon: Icon(Icons.directions_car)),
-              Tab(icon: Icon(Icons.directions_bike)),
-              Tab(icon: Icon(Icons.directions_run)),
-            ],
-          ),
+      Material(
+        color: this.colorBackground,
+        child: TabBar(
+          controller: DefaultTabController.of(context),
+          tabs: [
+            Tab(icon: Icon(Icons.person_add, color: this.colorIcon)),
+            Tab(icon: Icon(Icons.local_movies, color: this.colorIcon)),
+            Tab(icon: Icon(Icons.share, color: this.colorIcon)),
+          ],
         ),
+      ),
+      AnimatedBuilder(
+        animation: anim,
+        builder: (BuildContext context, Widget child){
+
+          var percentage = ((anim.value / animMax)+0.15)/1.15;
+
+          return ClipPath(
+            clipper: BubblyClipper(percentage: percentage),
+            child: Material(
+              color: this.colorBackgroundFilled,
+              child: TabBar(
+                controller: DefaultTabController.of(context),
+                tabs: [
+                  Tab(icon: Icon(Icons.person_add, color: this.colorIconFilled)),
+                  Tab(icon: Icon(Icons.local_movies, color: this.colorIconFilled)),
+                  Tab(icon: Icon(Icons.share, color: this.colorIconFilled)),
+                ],
+              ),
+            ),
+          );
+        },
       )
     ]);
   }
 }
 
-
 class KinoStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -103,15 +135,27 @@ class KinoStep extends StatelessWidget {
 
 }
 
-class YeetClipper extends CustomClipper<Path> {
+class BubblyClipper extends CustomClipper<Path> {
+  BubblyClipper({@required this.percentage}): super();
+
+  double percentage;
+
   @override
   Path getClip(Size size) {
     return Path()
-      ..lineTo(0.0, size.height)
-      ..lineTo(size.width / 1.8, size.height)
-      ..lineTo(size.width / 2.2, 0.0)
-      ..lineTo(0.0, 0.0)
-      ..close();
+        ..lineTo(size.width*percentage-10, 0.0)
+//        ..lineTo(size.width*percentage, 10.0)
+        ..arcTo(Rect.fromCenter(center: Offset(size.width*percentage-10, 10), width: 20, height: 20), -pi/2, pi/2, false)
+        ..lineTo(size.width*percentage, size.height)
+        ..lineTo(0.0, size.height)
+//      ..arcTo(Rect.fromCenter(center: Offset(10, size.width-10), width: 10, height: 10), 0, pi, false)
+        ..close();
+//      ..lineTo(0.0, size.height-10)
+//      ..lineTo(size.width * percentage - 10, size.height)
+//      ..arcTo(Rect.fromCenter(center: Offset(size.height-10, size.width-10), width: 10, height: 10), 0, pi, false)
+//      ..lineTo(size.width * percentage, 0.0)
+//      ..lineTo(0.0, 0.0)
+//      ..close();
   }
 
   @override
@@ -120,45 +164,4 @@ class YeetClipper extends CustomClipper<Path> {
   }
 }
 
-class YeetPainter extends CustomPainter{
 
-  const YeetPainter({@required this.rectColor}): super();
-
-  final rectSpacing = 10;
-
-  final Color rectColor;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    var rectSize = size.height;
-    var padding = rectSize/2;
-    var intervalSize = rectSize + 2*padding;
-    var rectCount = size.width / intervalSize;
-
-    var rectPaint = Paint();
-    rectPaint.color = rectColor;
-
-    var tempPaint = Paint();
-    tempPaint.color = Colors.yellow;
-
-    //canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), tempPaint);
-    for(int i = 0; i < rectCount; i++){
-//      canvas.drawRect(Rect.fromCenter(
-//        center: Offset((i+0.5)*intervalSize+padding, size.height/2),
-//        width: rectSize,
-//        height: rectSize
-//      ), rectPaint);
-      canvas.drawRRect(RRect.fromRectAndRadius(Rect.fromCenter(
-        center: Offset((i+0.5)*intervalSize+padding, size.height/2),
-        width: rectSize,
-        height: rectSize
-      ), Radius.circular(5)), rectPaint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
-
-}

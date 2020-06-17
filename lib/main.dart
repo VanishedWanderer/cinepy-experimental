@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
+import 'package:helloworld/bottomsheet.dart';
 import 'package:helloworld/kinogehaddscreen.dart';
 
 void main() {
@@ -79,16 +80,17 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         },
       ),
-
-
-
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
         shape: AutomaticNotchedShape(RoundedRectangleBorder(),ContinuousRectangleBorder(borderRadius: BorderRadius.circular(28.0))),
         notchMargin: 6.0,
         child: Row(
           children: [
-            IconButton(icon: Icon(Icons.menu), onPressed: () {},),
+            IconButton(icon: Icon(Icons.menu), onPressed: () {
+              showModalBottomSheet(context: context, builder: (BuildContext context){
+                return BottomNav();
+              });
+            },),
             IconButton(icon: Icon(Icons.search), onPressed: () {},),
           ],
         ),
