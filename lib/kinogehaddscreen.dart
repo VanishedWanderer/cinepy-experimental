@@ -36,7 +36,6 @@ class _KinoGehAddScreenState extends State<KinoGehAddScreen> with SingleTickerPr
                       padding: EdgeInsets.fromLTRB(0, 10, 0, 5),
                     ),
                     TabBarView(
-                      controller: DefaultTabController.of(context),
                       children: [
                         KinoStep(),
                         KinoStep(),
@@ -79,7 +78,6 @@ class ClippedTabBar extends StatelessWidget {
     ]);
   }
 }
-
 
 class KinoStep extends StatelessWidget {
   @override
@@ -140,8 +138,9 @@ class YeetPainter extends CustomPainter{
 
     var tempPaint = Paint();
     tempPaint.color = Colors.yellow;
+    tempPaint.strokeWidth = 2;
+    tempPaint.style = PaintingStyle.stroke;
 
-    //canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), tempPaint);
     for(int i = 0; i < rectCount; i++){
 //      canvas.drawRect(Rect.fromCenter(
 //        center: Offset((i+0.5)*intervalSize+padding, size.height/2),
@@ -149,11 +148,12 @@ class YeetPainter extends CustomPainter{
 //        height: rectSize
 //      ), rectPaint);
       canvas.drawRRect(RRect.fromRectAndRadius(Rect.fromCenter(
-        center: Offset((i+0.5)*intervalSize+padding, size.height/2),
+        center: Offset((i+0.5)*intervalSize, size.height/2),
         width: rectSize,
         height: rectSize
       ), Radius.circular(5)), rectPaint);
     }
+    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), tempPaint);
   }
 
   @override
