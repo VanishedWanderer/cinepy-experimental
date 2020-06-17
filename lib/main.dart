@@ -7,7 +7,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,7 +17,6 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.blueGrey[900],
           fontFamily: 'Comfortaa'
       ),
-      //home: MyHomePage(title: 'Flutter Demo Home Page'),
       home: MyHomePage()
     );
   }
@@ -66,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return KinoGehAddScreen();
         },
         closedElevation: 6.0,
-        closedShape: const RoundedRectangleBorder(
+        closedShape: const ContinuousRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(56 / 2),
           ),
@@ -90,7 +88,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
+        shape: AutomaticNotchedShape(RoundedRectangleBorder(),ContinuousRectangleBorder(borderRadius: BorderRadius.circular(28.0))),
+        notchMargin: 6.0,
         child: Row(
           children: [
             IconButton(icon: Icon(Icons.menu), onPressed: () {},),
