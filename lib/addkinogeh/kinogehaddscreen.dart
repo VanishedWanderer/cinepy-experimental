@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:helloworld/addkinogeh/person-tab.dart';
 import 'package:helloworld/parallax-tab/parallax-tab-background.dart';
 import 'package:tinycolor/tinycolor.dart';
 
@@ -44,7 +45,7 @@ class _KinoGehAddScreenState extends State<KinoGehAddScreen> with SingleTickerPr
                     ),
                     TabBarView(
                       children: [
-                        KinoStep(),
+                        KinoStep(child: PersonTab()),
                         KinoStep(),
                         KinoStep(),
                       ],
@@ -115,6 +116,9 @@ class ClippedTabBar extends StatelessWidget {
 }
 
 class KinoStep extends StatelessWidget {
+  const KinoStep({this.child}): super();
+  final Widget child;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -124,7 +128,7 @@ class KinoStep extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.fromLTRB(20, 35, 20, 20),
             child: Card(
-              child: Text("Bike"),
+              child: child,
               elevation: 5,
             ),
           ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
-import 'package:helloworld/kinogehaddscreen.dart';
+import 'package:helloworld/addkinogeh/kinogehaddscreen.dart';
 
 void main() {
   runApp(MyApp());
