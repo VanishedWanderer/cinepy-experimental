@@ -23,9 +23,9 @@ class _KinoGehAddScreenState extends State<KinoGehAddScreen> with SingleTickerPr
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-              backgroundColor: Theme.of(context).accentColor,
+              backgroundColor: Theme.of(context).primaryColor,
               bottomNavigationBar: ClippedTabBar(
-                colorBackgroundFilled: Theme.of(context).primaryColor,
+                colorBackgroundFilled: TinyColor(Theme.of(context).accentColor).darken(5).color,
                 colorIcon: Colors.white,
                 colorIconFilled: Colors.white,
               ),
@@ -36,7 +36,7 @@ class _KinoGehAddScreenState extends State<KinoGehAddScreen> with SingleTickerPr
                     Padding(
                       child: ParallaxTabBackground(
                         child: CustomPaint(
-                          painter: FilmPainter(rectColor: TinyColor(Theme.of(context).accentColor).lighten(15).color),
+                          painter: FilmPainter(rectColor: TinyColor(Theme.of(context).primaryColor).darken(15).color),
                           size: Size(MediaQuery.of(context).size.width*2, 20),
                         )
                       ),
@@ -82,9 +82,9 @@ class ClippedTabBar extends StatelessWidget {
         child: TabBar(
           controller: DefaultTabController.of(context),
           tabs: [
-            Tab(icon: Icon(Icons.directions_car, color: this.colorIcon)),
-            Tab(icon: Icon(Icons.directions_bike, color: this.colorIcon)),
-            Tab(icon: Icon(Icons.directions_run, color: this.colorIcon)),
+            Tab(icon: Icon(Icons.person_add, color: this.colorIcon)),
+            Tab(icon: Icon(Icons.local_movies, color: this.colorIcon)),
+            Tab(icon: Icon(Icons.share, color: this.colorIcon)),
           ],
         ),
       ),
@@ -101,9 +101,9 @@ class ClippedTabBar extends StatelessWidget {
               child: TabBar(
                 controller: DefaultTabController.of(context),
                 tabs: [
-                  Tab(icon: Icon(Icons.directions_car, color: this.colorIconFilled)),
-                  Tab(icon: Icon(Icons.directions_bike, color: this.colorIconFilled)),
-                  Tab(icon: Icon(Icons.directions_run, color: this.colorIconFilled)),
+                  Tab(icon: Icon(Icons.person_add, color: this.colorIconFilled)),
+                  Tab(icon: Icon(Icons.local_movies, color: this.colorIconFilled)),
+                  Tab(icon: Icon(Icons.share, color: this.colorIconFilled)),
                 ],
               ),
             ),
@@ -143,11 +143,19 @@ class BubblyClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     return Path()
-      ..lineTo(0.0, size.height)
-      ..lineTo(size.width * percentage, size.height)
-      ..lineTo(size.width * percentage, 0.0)
-      ..lineTo(0.0, 0.0)
-      ..close();
+        ..lineTo(size.width*percentage-10, 0.0)
+//        ..lineTo(size.width*percentage, 10.0)
+        ..arcTo(Rect.fromCenter(center: Offset(size.width*percentage-10, 10), width: 20, height: 20), -pi/2, pi/2, false)
+        ..lineTo(size.width*percentage, size.height)
+        ..lineTo(0.0, size.height)
+//      ..arcTo(Rect.fromCenter(center: Offset(10, size.width-10), width: 10, height: 10), 0, pi, false)
+        ..close();
+//      ..lineTo(0.0, size.height-10)
+//      ..lineTo(size.width * percentage - 10, size.height)
+//      ..arcTo(Rect.fromCenter(center: Offset(size.height-10, size.width-10), width: 10, height: 10), 0, pi, false)
+//      ..lineTo(size.width * percentage, 0.0)
+//      ..lineTo(0.0, 0.0)
+//      ..close();
   }
 
   @override
