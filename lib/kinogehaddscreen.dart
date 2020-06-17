@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:helloworld/parallax-tab/parallax-tab-background.dart';
 import 'package:tinycolor/tinycolor.dart';
 
 class KinoGehAddScreen extends StatefulWidget {
@@ -25,7 +26,15 @@ class _KinoGehAddScreenState extends State<KinoGehAddScreen> with SingleTickerPr
                 child: Stack(
                   alignment: Alignment.topLeft,
                   children: [
-                    Padding(child: FilmReelRects(), padding: EdgeInsets.fromLTRB(0, 10, 0, 5),),
+                    Padding(
+                      child: ParallaxTabBackground(
+                        child: CustomPaint(
+                          painter: YeetPainter(rectColor: TinyColor(Theme.of(context).accentColor).lighten(15).color),
+                          size: Size(MediaQuery.of(context).size.width*2, 20),
+                        )
+                      ),
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 5),
+                    ),
                     TabBarView(
                       controller: DefaultTabController.of(context),
                       children: [
@@ -71,27 +80,6 @@ class ClippedTabBar extends StatelessWidget {
   }
 }
 
-class FilmReelRects extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-    Animation anim = DefaultTabController.of(context).animation;
-    return AnimatedBuilder(
-      animation: anim,
-      builder: (BuildContext context, Widget child){
-        double offset = anim.value * 1.0/3.0;
-        return OverflowBox(
-            maxWidth: MediaQuery.of(context).size.width*2,
-            alignment: Alignment(offset, -1),
-            child: CustomPaint(
-              painter: YeetPainter(rectColor: TinyColor(Theme.of(context).accentColor).lighten(15).color),
-              size: Size.fromHeight(20),
-            )
-        );
-      },
-    );
-  }
-
-}
 
 class KinoStep extends StatelessWidget {
   @override
@@ -105,7 +93,7 @@ class KinoStep extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(20, 35, 20, 20),
             child: Card(
               child: Text("Bike"),
-              elevation: 20,
+              elevation: 5,
             ),
           ),
         ),
