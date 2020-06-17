@@ -1,7 +1,5 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:helloworld/parallaxtab/navigation-bus.dart';
 import 'package:tinycolor/tinycolor.dart';
 
 class KinoGehAddScreen extends StatefulWidget {
@@ -18,42 +16,18 @@ class _KinoGehAddScreenState extends State<KinoGehAddScreen> with SingleTickerPr
     super.initState();
     // TODO: implement initState
     _tabController = TabController(length: 3, vsync: this);
-    NavigationBus.registerTabController(_tabController);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
             backgroundColor: Theme.of(context).accentColor,
-            bottomNavigationBar: Stack(children: [
-              TabBar(
-                controller: _tabController,
-                tabs: [
-                  Tab(icon: Icon(Icons.directions_car, color: Colors.black)),
-                  Tab(icon: Icon(Icons.directions_bike, color: Colors.black)),
-                  Tab(icon: Icon(Icons.directions_run, color: Colors.black)),
-                ],
-              ),
-              ClipPath(
-                clipper: YeetClipper(),
-                child: Material(
-                  color: Theme.of(context).primaryColor,
-                  child: TabBar(
-                    controller: _tabController,
-                    tabs: [
-                      Tab(icon: Icon(Icons.directions_car)),
-                      Tab(icon: Icon(Icons.directions_bike)),
-                      Tab(icon: Icon(Icons.directions_run)),
-                    ],
-                  ),
-                ),
-              )
-            ]),
+            bottomNavigationBar: ClippedTabBar(tabController: _tabController),
             body: SafeArea(
               child: Stack(
                 alignment: Alignment.topLeft,
                 children: [
-                  Padding(child: FilmReelRects(), padding: EdgeInsets.fromLTRB(0, 10, 0, 5),),
+                  Padding(child: FilmReelRects(tabController: _tabController), padding: EdgeInsets.fromLTRB(0, 10, 0, 5),),
                   TabBarView(
                     controller: _tabController,
                     children: [
@@ -68,7 +42,46 @@ class _KinoGehAddScreenState extends State<KinoGehAddScreen> with SingleTickerPr
   }
 }
 
+class ClippedTabBar extends StatelessWidget {
+  const ClippedTabBar({@required this.tabController}): super();
+
+  final TabController tabController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(children: [
+      TabBar(
+        controller: tabController,
+        tabs: [
+          Tab(icon: Icon(Icons.directions_car, color: Colors.black)),
+          Tab(icon: Icon(Icons.directions_bike, color: Colors.black)),
+          Tab(icon: Icon(Icons.directions_run, color: Colors.black)),
+        ],
+      ),
+      ClipPath(
+        clipper: YeetClipper(),
+        child: Material(
+          color: Theme.of(context).primaryColor,
+          child: TabBar(
+            controller: tabController,
+            tabs: [
+              Tab(icon: Icon(Icons.directions_car)),
+              Tab(icon: Icon(Icons.directions_bike)),
+              Tab(icon: Icon(Icons.directions_run)),
+            ],
+          ),
+        ),
+      )
+    ]);
+  }
+
+}
+
 class FilmReelRects extends StatefulWidget{
+  const FilmReelRects({@required this.tabController}): super();
+
+  final TabController tabController;
+
   @override
   State<StatefulWidget> createState() => _FilmReelRectsState();
 }
@@ -77,7 +90,7 @@ class _FilmReelRectsState extends State<FilmReelRects>{
   @override
   Widget build(BuildContext context) {
 
-    Animation anim = NavigationBus.animation;
+    Animation anim = widget.tabController.animation;
 
     return AnimatedBuilder(
       animation: anim,
@@ -104,10 +117,6 @@ class KinoStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-//          CustomPaint(
-//            painter: YeetPainter(rectColor: TinyColor(Theme.of(context).accentColor).lighten(15).color),
-//            size: Size.fromHeight(40),
-//          ),
         Expanded(
           child: Padding(
             padding: EdgeInsets.fromLTRB(20, 35, 20, 20),
@@ -163,11 +172,16 @@ class YeetPainter extends CustomPainter{
 
     //canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), tempPaint);
     for(int i = 0; i < rectCount; i++){
-      canvas.drawRect(Rect.fromCenter(
+//      canvas.drawRect(Rect.fromCenter(
+//        center: Offset((i+0.5)*intervalSize+padding, size.height/2),
+//        width: rectSize,
+//        height: rectSize
+//      ), rectPaint);
+      canvas.drawRRect(RRect.fromRectAndRadius(Rect.fromCenter(
         center: Offset((i+0.5)*intervalSize+padding, size.height/2),
         width: rectSize,
         height: rectSize
-      ), rectPaint);
+      ), Radius.circular(5)), rectPaint);
     }
   }
 
