@@ -9,49 +9,44 @@ class KinoGehAddScreen extends StatefulWidget {
 
 class _KinoGehAddScreenState extends State<KinoGehAddScreen> with SingleTickerProviderStateMixin {
 
-  TabController _tabController;
-
   @override
   void initState() {
     super.initState();
-    // TODO: implement initState
-    _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-            backgroundColor: Theme.of(context).accentColor,
-            bottomNavigationBar: ClippedTabBar(tabController: _tabController),
-            body: SafeArea(
-              child: Stack(
-                alignment: Alignment.topLeft,
-                children: [
-                  Padding(child: FilmReelRects(tabController: _tabController), padding: EdgeInsets.fromLTRB(0, 10, 0, 5),),
-                  TabBarView(
-                    controller: _tabController,
-                    children: [
-                      KinoStep(),
-                      KinoStep(),
-                      KinoStep(),
-                    ],
-                  ),
-                ]
-              ),
-            ));
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+              backgroundColor: Theme.of(context).accentColor,
+              bottomNavigationBar: ClippedTabBar(),
+              body: SafeArea(
+                child: Stack(
+                  alignment: Alignment.topLeft,
+                  children: [
+                    Padding(child: FilmReelRects(), padding: EdgeInsets.fromLTRB(0, 10, 0, 5),),
+                    TabBarView(
+                      controller: DefaultTabController.of(context),
+                      children: [
+                        KinoStep(),
+                        KinoStep(),
+                        KinoStep(),
+                      ],
+                    ),
+                  ]
+                ),
+              )),
+    );
   }
 }
 
 class ClippedTabBar extends StatelessWidget {
-  const ClippedTabBar({@required this.tabController}): super();
-
-  final TabController tabController;
-
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
       TabBar(
-        controller: tabController,
+        controller: DefaultTabController.of(context),
         tabs: [
           Tab(icon: Icon(Icons.directions_car, color: Colors.black)),
           Tab(icon: Icon(Icons.directions_bike, color: Colors.black)),
@@ -63,7 +58,7 @@ class ClippedTabBar extends StatelessWidget {
         child: Material(
           color: Theme.of(context).primaryColor,
           child: TabBar(
-            controller: tabController,
+            controller: DefaultTabController.of(context),
             tabs: [
               Tab(icon: Icon(Icons.directions_car)),
               Tab(icon: Icon(Icons.directions_bike)),
@@ -74,24 +69,12 @@ class ClippedTabBar extends StatelessWidget {
       )
     ]);
   }
-
 }
 
-class FilmReelRects extends StatefulWidget{
-  const FilmReelRects({@required this.tabController}): super();
-
-  final TabController tabController;
-
-  @override
-  State<StatefulWidget> createState() => _FilmReelRectsState();
-}
-
-class _FilmReelRectsState extends State<FilmReelRects>{
+class FilmReelRects extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-
-    Animation anim = widget.tabController.animation;
-
+    Animation anim = DefaultTabController.of(context).animation;
     return AnimatedBuilder(
       animation: anim,
       builder: (BuildContext context, Widget child){
