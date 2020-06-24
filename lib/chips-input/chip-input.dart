@@ -15,11 +15,85 @@ class ChipInput<T> extends StatefulWidget {
 typedef ChipsInputSuggestions<T> = Future<List<T>> Function(String query);
 typedef ChipSelected<T> = void Function(T data, bool selected);
 typedef ChipsBuilder<T> = Widget Function(BuildContext context, T data);
+typedef ChipsDataListener = void Function();
 
+class ChipsData<T> {
+  ChipsData();
+
+  Set<T> _chips;
+  ChipsDataListener _onAdd;
+  ChipsDataListener _onDelete;
+
+  void add(T data){
+    _chips.add(data);
+    _onAdd?.call();
+  }
+
+  void delete(T data){
+    _chips.remove(data);
+    _onDelete?.call();
+  }
+}
+
+class _ChipInputState<T> extends State<ChipInput<T>> {
+  static const kObjectReplacementChar = 0xFFFC;
+
+  TextEditingController controller;
+
+  List<String> _suggestions;
+
+  FocusNode _textFieldFocusNode;
+
+  void updateSuggestions(){
+    setState(() {
+      _suggestions = controller.text.runes.toList().map((e) => "Yeet $e").toList();
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller = new TextEditingController(text: " ");
+    controller.addListener(() {
+      if(controller.text.length == 0){
+        controller.text = " ";
+        debugPrint("DeadDelete");
+      }else if(!controller.text.startsWith(" ")){
+        controller.text = " " + controller.text;
+      }
+      debugPrint(":${controller.text}:");
+      updateSuggestions();
+    });
+    _textFieldFocusNode = FocusNode();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TextField(
+          controller: controller,
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: _suggestions?.length ?? 0,
+            itemBuilder: (context, position) {
+              return Text("Suggestion $position, ${_suggestions[position]}");
+            },
+          ),
+        )
+      ],
+    );
+  }
+
+}
+
+/*
 class _ChipInputState<T> extends State<ChipInput<T>> implements TextInputClient{
   static const kObjectReplacementChar = 0xFFFC;
 
-  Set<T> _chips = Set<T>();
+  ChipsData<T> _chipsData = ChipsData();
 
   List<T> _suggestions;
   TextInputConnection _connection;
@@ -81,6 +155,19 @@ class _ChipInputState<T> extends State<ChipInput<T>> implements TextInputClient{
     super.initState();
     _focusNode = FocusNode();
     _focusNode.addListener(_onFocusChanged);
+    _chipsData._onAdd = () {
+      setState(() {
+        //_updateTextInputState();
+        _suggestions = null;
+      });
+      //widget.onChanged(_chipsData._chips.toList(growable: false));
+    };
+    _chipsData._onDelete = () {
+      setState(() {
+        //_updateTextInputState();
+      });
+      //widget.onChanged(_chipsData._chips.toList(growable: false));
+    };
   }
 
   @override
@@ -92,7 +179,7 @@ class _ChipInputState<T> extends State<ChipInput<T>> implements TextInputClient{
 
   @override
   Widget build(BuildContext context) {
-    var textBoxChildren = _chips
+    var textBoxChildren = _chipsData._chips
         .map<Widget>((data) => Chip(label: Text("Chip"),
     ))
         .toList();
@@ -161,7 +248,7 @@ class _ChipInputState<T> extends State<ChipInput<T>> implements TextInputClient{
     final newCount = _countReplacements(value);
     setState(() {
       if (newCount < oldCount) {
-        _chips = Set.from(_chips.take(newCount));
+        _chipsData._chips = Set.from(_chipsData._chips.take(newCount));
       }
       _value = value;
     });
@@ -170,10 +257,16 @@ class _ChipInputState<T> extends State<ChipInput<T>> implements TextInputClient{
 
   @override
   void updateFloatingCursor(RawFloatingCursorPoint point) {}
-  @override
-  AutofillScope get currentAutofillScope => throw UnimplementedError();
+
   @override
   TextEditingValue get currentTextEditingValue => throw UnimplementedError();
+
+  @override
+  // TODO: implement currentAutofillScope
+  AutofillScope get currentAutofillScope => null;
+
   @override
   void showAutocorrectionPromptRect(int start, int end) {}
 }
+
+ */
