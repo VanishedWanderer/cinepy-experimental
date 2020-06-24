@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
 import 'package:helloworld/bottomsheet.dart';
 import 'package:helloworld/kinogehaddscreen.dart';
-import 'package:helloworld/pages/friendspage.dart';
-import 'package:helloworld/pages/moviespage.dart';
+import 'package:helloworld/pages/friendstab.dart';
+import 'package:helloworld/pages/moviestab.dart';
 import 'package:helloworld/widgets/kinogehsearchdelegate.dart';
 
 void main() {
