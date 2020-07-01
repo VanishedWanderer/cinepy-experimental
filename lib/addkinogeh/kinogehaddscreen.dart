@@ -1,6 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:helloworld/addkinogeh/person-tab.dart';
+import 'package:helloworld/addkinogeh/test-tab.dart';
+import 'package:helloworld/addkinogeh/test-tab2.dart';
 import 'package:helloworld/parallax-tab/parallax-tab-background.dart';
 import 'package:tinycolor/tinycolor.dart';
 
@@ -13,46 +16,49 @@ class KinoGehAddScreen extends StatefulWidget {
 
 class _KinoGehAddScreenState extends State<KinoGehAddScreen> with SingleTickerProviderStateMixin {
 
+  TabController _tabController;
+
   @override
   void initState() {
     super.initState();
+    _tabController = new TabController(length: 3, vsync: this);
   }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-              backgroundColor: Theme.of(context).primaryColor,
-              bottomNavigationBar: ClippedTabBar(
-                colorBackgroundFilled: TinyColor(Theme.of(context).accentColor).darken(5).color,
-                colorIcon: Colors.white,
-                colorIconFilled: Colors.white,
+    return Scaffold(
+            backgroundColor: Theme.of(context).primaryColor,
+            bottomNavigationBar: ClippedTabBar(
+              controller: _tabController,
+              colorBackgroundFilled: TinyColor(Theme.of(context).accentColor).darken(5).color,
+              colorIcon: Colors.white,
+              colorIconFilled: Colors.white,
+            ),
+            body: SafeArea(
+              child: Stack(
+                alignment: Alignment.topLeft,
+                children: [
+                  Padding(
+                    child: ParallaxTabBackground(
+                      controller: _tabController,
+                      child: CustomPaint(
+                        painter: FilmPainter(rectColor: TinyColor(Theme.of(context).primaryColor).darken(15).color),
+                        size: Size(MediaQuery.of(context).size.width*2, 20),
+                      )
+                    ),
+                    padding: EdgeInsets.fromLTRB(0, 10, 0, 5),
+                  ),
+                  TabBarView(
+                    controller: _tabController,
+                    children: [
+                      KinoStep(child: PersonTab(), nextPressHandler: () => _tabController.animateTo(1)),
+                      KinoStep(child: TestTab(), nextPressHandler: () => _tabController.animateTo(2)),
+                      KinoStep(child: TestTab2()),
+                    ],
+                  ),
+                ]
               ),
-              body: SafeArea(
-                child: Stack(
-                  alignment: Alignment.topLeft,
-                  children: [
-                    Padding(
-                      child: ParallaxTabBackground(
-                        child: CustomPaint(
-                          painter: FilmPainter(rectColor: TinyColor(Theme.of(context).primaryColor).darken(15).color),
-                          size: Size(MediaQuery.of(context).size.width*2, 20),
-                        )
-                      ),
-                      padding: EdgeInsets.fromLTRB(0, 10, 0, 5),
-                    ),
-                    TabBarView(
-                      children: [
-                        KinoStep(),
-                        KinoStep(),
-                        KinoStep(),
-                      ],
-                    ),
-                  ]
-                ),
-              )),
-    );
+            ));
   }
 }
 
@@ -62,25 +68,32 @@ class ClippedTabBar extends StatelessWidget {
     this.colorIcon,
     this.colorIconFilled,
     this.colorBackground = Colors.transparent,
-    this.colorBackgroundFilled
+    this.colorBackgroundFilled,
+    this.controller
   }): super();
 
   final Color colorIcon;
   final Color colorIconFilled;
   final Color colorBackground;
   final Color colorBackgroundFilled;
+  final TabController controller;
+
 
   @override
   Widget build(BuildContext context) {
-    var animMax = DefaultTabController.of(context).length-1;
-    Animation<double> anim = DefaultTabController.of(context).animation;
+
+    var tabController = (controller ?? DefaultTabController.of(context));
+    assert(tabController != null);
+
+    var animMax = tabController.length-1;
+    Animation<double> anim = tabController.animation;
 
 
     return Stack(children: [
       Material(
         color: this.colorBackground,
         child: TabBar(
-          controller: DefaultTabController.of(context),
+          controller: tabController,
           tabs: [
             Tab(icon: Icon(Icons.person_add, color: this.colorIcon)),
             Tab(icon: Icon(Icons.local_movies, color: this.colorIcon)),
@@ -99,7 +112,7 @@ class ClippedTabBar extends StatelessWidget {
             child: Material(
               color: this.colorBackgroundFilled,
               child: TabBar(
-                controller: DefaultTabController.of(context),
+                controller: tabController,
                 tabs: [
                   Tab(icon: Icon(Icons.person_add, color: this.colorIconFilled)),
                   Tab(icon: Icon(Icons.local_movies, color: this.colorIconFilled)),
@@ -114,7 +127,16 @@ class ClippedTabBar extends StatelessWidget {
   }
 }
 
+typedef NextPressHandler = void Function();
+
 class KinoStep extends StatelessWidget {
+  const KinoStep({
+    @required this.child,
+    this.nextPressHandler
+  }): super();
+  final Widget child;
+  final nextPressHandler;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -124,7 +146,18 @@ class KinoStep extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.fromLTRB(20, 35, 20, 20),
             child: Card(
-              child: Text("Bike"),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: child,
+                  ),
+                  FlatButton(
+                    onPressed: () => nextPressHandler?.call(),
+                    child: Text("Next"),
+                  )
+                ],
+              ),
               elevation: 5,
             ),
           ),

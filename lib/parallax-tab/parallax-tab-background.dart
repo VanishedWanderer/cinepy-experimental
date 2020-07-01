@@ -27,14 +27,21 @@ import 'package:flutter/material.dart';
 /// align with the background.
 ///
 class ParallaxTabBackground extends StatelessWidget{
-  const ParallaxTabBackground({@required this.child}): super();
+  const ParallaxTabBackground({
+    @required this.child,
+    this.controller
+  }): super();
 
   final Widget child;
+  final TabController controller;
 
   @override
   Widget build(BuildContext context) {
-    Animation<double> anim = DefaultTabController.of(context).animation;
-    var maxValue = DefaultTabController.of(context).length-1;
+    var tabController = controller ?? DefaultTabController.of(context);
+    assert(tabController != null);
+
+    Animation<double> anim = tabController.animation;
+    var maxValue = tabController.length-1;
 
     return AnimatedBuilder(
       animation: anim,
