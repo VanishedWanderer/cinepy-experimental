@@ -25,7 +25,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           brightness: Brightness.light,
           primaryColor: Colors.redAccent[400],
+          primaryColorBrightness: Brightness.light,
+          primaryColorLight: Color(0xffff616f),
+          primaryColorDark: Color(0xffc4001d),
           accentColor: Colors.blueGrey[900],
+          accentColorBrightness: Brightness.dark,
+          errorColor: Colors.yellowAccent[400],
+          bottomAppBarColor: Colors.blueGrey[900],
+          backgroundColor: Colors.white70,
           fontFamily: 'Comfortaa'
       ),
     );
@@ -54,7 +61,6 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               SafeArea(
                 child: Container(
-                  color: Theme.of(context).primaryColor,
                   child: TabBar(
                     tabs: <Widget>[
                       Tab(icon: Icon(Icons.movie),),
@@ -92,7 +98,7 @@ class _HomePageState extends State<HomePage> {
               child: Center(
                 child: Icon(
                   Icons.movie,
-                  color: Theme.of(context).colorScheme.onSecondary,
+                  color: Theme.of(context).primaryIconTheme.color,
                 ),
               ),
             );
@@ -100,7 +106,6 @@ class _HomePageState extends State<HomePage> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
-          color: Theme.of(context).accentColor,
           shape: AutomaticNotchedShape(RoundedRectangleBorder(),ContinuousRectangleBorder(borderRadius: BorderRadius.circular(28.0))),
           notchMargin: 6.0,
           child: Row(
