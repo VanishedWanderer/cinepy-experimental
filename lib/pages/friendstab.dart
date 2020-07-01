@@ -11,11 +11,7 @@ class FriendsPage extends StatefulWidget{
 class _FriendsPageState extends State<FriendsPage>{
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('Helo'),
-      ),
-    );
+    return Text('Helo Freinds');
   }
 
 }

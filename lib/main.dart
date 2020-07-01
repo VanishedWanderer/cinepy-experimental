@@ -3,6 +3,7 @@ import 'package:animations/animations.dart';
 import 'package:helloworld/bottomsheet.dart';
 import 'package:helloworld/kinogehaddscreen.dart';
 import 'package:helloworld/pages/friendstab.dart';
+import 'package:helloworld/pages/kinogehtab.dart';
 import 'package:helloworld/pages/moviestab.dart';
 import 'package:helloworld/widgets/kinogehsearchdelegate.dart';
 
@@ -54,25 +55,30 @@ class _HomePageState extends State<HomePage> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: AppBar(
-          leading: TabBar(
-            tabs: <Widget>[
-              Tab(icon: Icon(Icons.movie),),
-              Tab(icon: Icon(Icons.theaters),),
-              Tab(icon: Icon(Icons.people),),
-            ],
-          ),
-        ),
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Text(
-                'You have pushed the button this many times:',
+              SafeArea(
+                child: Container(
+                  color: Theme.of(context).primaryColor,
+                  child: TabBar(
+                    tabs: <Widget>[
+                      Tab(icon: Icon(Icons.movie),),
+                      Tab(icon: Icon(Icons.theaters),),
+                      Tab(icon: Icon(Icons.people),),
+                    ],
+                  ),
+                ),
               ),
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headline4,
+              Expanded(
+                child: TabBarView(
+                    children: <Widget>[
+                      KinogehPage(),
+                      MoviesPage(),
+                      FriendsPage(),
+                    ],
+                ),
               ),
             ],
           ),
