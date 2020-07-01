@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:helloworld/pages/profilepage.dart';
+import 'package:helloworld/pages/settingspage.dart';
 
 class BottomNav extends StatefulWidget{
   @override
@@ -21,13 +23,17 @@ class _BottomNavState extends State<BottomNav>{
           ListTile(
             title: Text('Profil'),
             leading: Icon(Icons.person),
-          onTap: () {},
+          onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+          },
           ),
           const Divider(),
           ListTile(
             title: Text('Einstellungen'),
             leading: Icon(Icons.settings),
-          onTap: () {},
+          onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
+          },
           ),
           const Divider(),
           ListTile(
