@@ -8,10 +8,28 @@ import 'package:helloworld/chips-input/chip-input.dart';
 class PersonTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChipInput(
+    return ChipInput<AppProfile>(
       findSuggestions: (String query) async {
         return mockResults;
-      }
+      },
+      suggestionBuilder: (context, AppProfile data, ChipsData<AppProfile> chips) {
+        return GestureDetector(
+          child: Text(
+            data.name,
+          ),
+          onTap: () => chips.add(data),
+        );
+      },
+      chipsBuilder: (context, AppProfile data, ChipsData<AppProfile> chips){
+        return Chip(
+          avatar: CircleAvatar(
+            backgroundImage: NetworkImage(data.imageUrl),
+          ),
+          label: Text(data.name),
+          deleteIcon: Icon(Icons.close),
+          onDeleted: () => chips.delete(data),
+        );
+      },
 
     );
   }
