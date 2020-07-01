@@ -65,7 +65,7 @@ class _ChipInputState<T> extends State<ChipInput<T>> {
       updateSuggestions();
     };
 
-    controller = new TextEditingController(text: " ");
+    controller = new TextEditingController();
     controller.addListener(() {
       updateSuggestions();
     });
