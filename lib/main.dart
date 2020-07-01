@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
 import 'package:helloworld/bottomsheet.dart';
-import 'package:helloworld/kinogehaddscreen.dart';
 import 'package:helloworld/pages/friendstab.dart';
 import 'package:helloworld/pages/kinogehtab.dart';
 import 'package:helloworld/pages/moviestab.dart';
 import 'package:helloworld/widgets/kinogehsearchdelegate.dart';
+
+import 'addkinogeh/kinogehaddscreen.dart';
 
 void main() {
   runApp(MyApp());
