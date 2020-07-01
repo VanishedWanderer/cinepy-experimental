@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:helloworld/addkinogeh/person-tab.dart';
+import 'package:helloworld/addkinogeh/test-tab.dart';
+import 'package:helloworld/addkinogeh/test-tab2.dart';
 import 'package:helloworld/parallax-tab/parallax-tab-background.dart';
 import 'package:tinycolor/tinycolor.dart';
 
@@ -50,8 +52,8 @@ class _KinoGehAddScreenState extends State<KinoGehAddScreen> with SingleTickerPr
                     controller: _tabController,
                     children: [
                       KinoStep(child: PersonTab(), nextPressHandler: () => _tabController.animateTo(1)),
-                      KinoStep(child: Text("a"), nextPressHandler: () => _tabController.animateTo(2)),
-                      KinoStep(child: Text("b")),
+                      KinoStep(child: TestTab(), nextPressHandler: () => _tabController.animateTo(2)),
+                      KinoStep(child: TestTab2()),
                     ],
                   ),
                 ]
@@ -147,7 +149,9 @@ class KinoStep extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(child: child),
+                  Expanded(
+                    child: child,
+                  ),
                   FlatButton(
                     onPressed: () => nextPressHandler?.call(),
                     child: Text("Next"),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:helloworld/darteye/ObservableList.dart';
+import 'package:helloworld/darteye/ui/ObservingAnimatedList.dart';
 
 class ChipInput<T> extends StatefulWidget {
   const ChipInput({
@@ -15,16 +17,13 @@ class ChipInput<T> extends StatefulWidget {
   final WidgetBuilder<T> suggestionBuilder;
 }
 
-typedef SuggestionQuery<T> = Future<List<T>> Function(String query);
+typedef SuggestionQuery<T> = Future<Iterable<T>> Function(String query);
 typedef WidgetBuilder<T> = Widget Function(BuildContext context, T data, ChipsData<T> chips);
 typedef ChipsDataListener = void Function();
 
-class ChipsData<T> {
-  ChipsData(){
-    _chips = Set();
-  }
 
-  Set<T> _chips;
+class ChipsData<T> {
+  Set<T> _chips = Set();
   ChipsDataListener _onAdd;
   ChipsDataListener _onDelete;
   ChipsDataListener _onChange;
@@ -45,14 +44,14 @@ class ChipsData<T> {
 class _ChipInputState<T> extends State<ChipInput<T>> {
   TextEditingController controller;
 
-  List<T> _suggestions;
+  ObservableList<T> _suggestions = new ObservableList(List());
   ChipsData<T> _chipsData;
 
   void updateSuggestions() async {
-    List<T> newSuggestions = await widget.findSuggestions(controller.text);
+    Iterable<T> newSuggestions = await widget.findSuggestions(controller.text);
     newSuggestions = newSuggestions.where((element) => !_chipsData._chips.contains(element)).toList(growable: false);
     setState(() {
-      _suggestions = newSuggestions;
+      _suggestions.morphTo(newSuggestions);
     });
   }
 
@@ -68,9 +67,9 @@ class _ChipInputState<T> extends State<ChipInput<T>> {
 
     controller = new TextEditingController(text: " ");
     controller.addListener(() {
-      debugPrint(":${controller.text}:");
       updateSuggestions();
     });
+    updateSuggestions();
   }
 
   @override
@@ -91,10 +90,21 @@ class _ChipInputState<T> extends State<ChipInput<T>> {
           ),
         ),
         Expanded(
-          child: ListView.builder(
-            itemCount: _suggestions?.length ?? 0,
-            itemBuilder: (context, position) {
-              return widget.suggestionBuilder(context, _suggestions[position], _chipsData);
+          child: ObservingAnimatedList(
+            list: _suggestions,
+            itemBuilder: (context, position, animation) {
+              return SizeTransition(
+                  axis: Axis.vertical,
+                  sizeFactor: animation,
+                child: widget.suggestionBuilder(context, _suggestions[position], _chipsData)
+              );
+            },
+            removeItemBuilder: (context, item, animation) {
+              return SizeTransition(
+                  axis: Axis.vertical,
+                  sizeFactor: animation,
+                  child: widget.suggestionBuilder(context, item, _chipsData)
+              );
             },
           ),
         )
