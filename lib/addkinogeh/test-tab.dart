@@ -72,7 +72,7 @@ class ListModel<E> {
         _items = List<E>.from(initialItems ?? <E>[]);
 
   final GlobalKey<AnimatedListState> listKey;
-  final dynamic removedItemBuilder;
+  final Widget Function(E, BuildContext, Animation<double>) removedItemBuilder;
   final List<E> _items;
 
   AnimatedListState get _animatedList => listKey.currentState;

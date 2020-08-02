@@ -111,14 +111,14 @@ class _HomePageState extends State<HomePage> {
           notchMargin: 6.0,
           child: Row(
             children: [
-              IconButton(icon: Icon(Icons.menu),color: Theme.of(context).accentIconTheme.color, onPressed: () {
-                showModalBottomSheet(context: context, builder: (BuildContext context){
+              IconButton(icon: const Icon(Icons.menu),color: Theme.of(context).accentIconTheme.color, onPressed: () {
+                showModalBottomSheet<BottomNav>(context: context, builder: (BuildContext context){
                   return BottomNav();
                 });
               },),
               Spacer(),
-              IconButton(icon: Icon(Icons.search), onPressed: () {
-                showSearch(context: context, delegate: KinogehSearchDelegate());
+              IconButton(icon: const Icon(Icons.search), onPressed: () {
+                showSearch<dynamic>(context: context, delegate: KinogehSearchDelegate());
               }, color: Theme.of(context).accentIconTheme.color,),
             ],
           ),

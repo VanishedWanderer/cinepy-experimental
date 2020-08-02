@@ -10,7 +10,7 @@ class PersonTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChipInput<AppProfile>(
       findSuggestions: (String query) async {
-        await Future.delayed(Duration(milliseconds: 500));
+        await Future<void>.delayed(const Duration(milliseconds: 500));
         return mockResults.where((element) => element.name.toLowerCase().contains(query.toLowerCase()));
       },
       suggestionBuilder: (context, AppProfile data, ChipsData<AppProfile> chips) {
