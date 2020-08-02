@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:helloworld/addkinogeh/movie-tab.dart';
 import 'package:helloworld/addkinogeh/person-tab.dart';
 import 'package:helloworld/addkinogeh/test-tab.dart';
 import 'package:helloworld/addkinogeh/test-tab2.dart';
@@ -52,7 +53,7 @@ class _KinoGehAddScreenState extends State<KinoGehAddScreen> with SingleTickerPr
                     controller: _tabController,
                     children: [
                       KinoStep(child: PersonTab(), nextPressHandler: () => _tabController.animateTo(1)),
-                      KinoStep(child: TestTab(), nextPressHandler: () => _tabController.animateTo(2)),
+                      KinoStep(child: MovieTab(), nextPressHandler: () => _tabController.animateTo(2)),
                       KinoStep(child: TestTab2()),
                     ],
                   ),
@@ -96,8 +97,8 @@ class ClippedTabBar extends StatelessWidget {
           controller: tabController,
           tabs: [
             Tab(icon: Icon(Icons.person_add, color: this.colorIcon)),
+            Tab(icon: Icon(Icons.filter_list, color: this.colorIcon)),
             Tab(icon: Icon(Icons.local_movies, color: this.colorIcon)),
-            Tab(icon: Icon(Icons.share, color: this.colorIcon)),
           ],
         ),
       ),
@@ -115,8 +116,8 @@ class ClippedTabBar extends StatelessWidget {
                 controller: tabController,
                 tabs: [
                   Tab(icon: Icon(Icons.person_add, color: this.colorIconFilled)),
+                  Tab(icon: Icon(Icons.filter_list, color: this.colorIconFilled)),
                   Tab(icon: Icon(Icons.local_movies, color: this.colorIconFilled)),
-                  Tab(icon: Icon(Icons.share, color: this.colorIconFilled)),
                 ],
               ),
             ),
