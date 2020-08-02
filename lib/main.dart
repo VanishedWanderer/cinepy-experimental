@@ -134,7 +134,7 @@ class _HomePageState extends State<HomePage> {
 
   List<Provider<dynamic>> genProviders() {
     return [
-      Provider<MoviesFacade>(create: (_) => MoviesFacade())
+      Provider<MoviesFacade>(create: (_) => MoviesMockFacade())
     ];
   }
 }

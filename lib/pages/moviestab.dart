@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -22,12 +24,14 @@ class _MoviesPageState extends State<MoviesPage>{
   @override
   Widget build(BuildContext context) {
     final MoviesFacade facade = Provider.of<MoviesFacade>(context);
+    facade.queryAll();
+
     return Column(
       children: [
         Expanded(
           child: Observer(
             builder: (_) => ListView.builder(
-                itemCount: facade.movies.length,
+                itemCount: facade.movies?.length ?? 0,
                 itemBuilder: (_, index) {
                   final movie = facade.movies[index];
                   return Observer(
@@ -41,10 +45,14 @@ class _MoviesPageState extends State<MoviesPage>{
           ),
         ),
         MaterialButton(
-          onPressed: () => {
-            facade.movies.add(Movie(id: 3, name: 'Oink'))
+          onPressed: () {
+
+            var movie = Movie();
+            movie.id = Random().nextInt(102);
+            movie.name = 'ÖÖHH';
+            facade.movies.add(movie);
           },
-          child: Text("Add"),
+          child: const Text('Add'),
         )
       ],
     );
