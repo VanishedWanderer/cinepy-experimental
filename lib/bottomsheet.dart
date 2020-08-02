@@ -14,17 +14,17 @@ class _BottomNavState extends State<BottomNav>{
   Widget build(BuildContext context) {
     return Container(
       height: 250,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0))
       ),
       child: ListView(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         children: <Widget>[
           ListTile(
-            title: Text('Profil'),
-            leading: Icon(Icons.person),
+            title: const Text('Profil'),
+            leading: const Icon(Icons.person),
           onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+              Navigator.push<ProfilePage>(context, MaterialPageRoute<ProfilePage>(builder: (BuildContext context) => ProfilePage()));
           },
           ),
           const Divider(),
@@ -32,7 +32,7 @@ class _BottomNavState extends State<BottomNav>{
             title: Text('Einstellungen'),
             leading: Icon(Icons.settings),
           onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
+              Navigator.push<SettingsPage>(context, MaterialPageRoute(builder: (context) => SettingsPage()));
           },
           ),
           const Divider(),

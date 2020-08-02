@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class KinogehSearchDelegate extends SearchDelegate {
+class KinogehSearchDelegate extends SearchDelegate<String> {
   @override
   List<Widget> buildActions(BuildContext context) {
     // TODO: implement buildActions

@@ -135,7 +135,7 @@ class KinoStep extends StatelessWidget {
     this.nextPressHandler
   }): super();
   final Widget child;
-  final nextPressHandler;
+  final Function nextPressHandler;
 
   @override
   Widget build(BuildContext context) {

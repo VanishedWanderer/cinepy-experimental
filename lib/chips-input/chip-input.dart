@@ -51,7 +51,7 @@ class _ChipInputState<T> extends State<ChipInput<T>> {
     Iterable<T> newSuggestions = await widget.findSuggestions(controller.text);
     newSuggestions = newSuggestions.where((element) => !_chipsData._chips.contains(element)).toList(growable: false);
     setState(() {
-      _suggestions.morphTo(newSuggestions);
+      _suggestions.morphTo(newSuggestions.toList());
     });
   }
 
@@ -99,7 +99,7 @@ class _ChipInputState<T> extends State<ChipInput<T>> {
                 child: widget.suggestionBuilder(context, _suggestions[position], _chipsData)
               );
             },
-            removeItemBuilder: (context, item, animation) {
+            removeItemBuilder: (context, T item, animation) {
               return SizeTransition(
                   axis: Axis.vertical,
                   sizeFactor: animation,
