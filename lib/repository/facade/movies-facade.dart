@@ -1,7 +1,7 @@
 import 'package:helloworld/repository/model/movie.dart';
 import 'package:mobx/mobx.dart';
 
-part 'movies.g.dart';
+part 'movies-facade.g.dart';
 
 class MoviesFacade = _MoviesFacade with _$MoviesFacade;
 
