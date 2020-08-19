@@ -20,32 +20,58 @@ class FilterPanel{
   });
 }
 
-List<FilterPanel> _panels = [
-  FilterPanel(
-      header: ListTile(
-        leading: Icon(Icons.location_on),
-        title: Text('Location'),
-        dense: true,
-      ),
-      body: Column(
-        children: <Widget>[
-          CheckboxListTile(
-            value: false,
-            title: Text('StarMovie Regau'),
-            dense: true,
-            onChanged: (bool value) {
-              
-            },
-          )
-        ],
-      )
-  ),
-];
+class CinemaCheckBox{
+  bool value;
+  Text name;
+
+  CinemaCheckBox({
+    this.name,
+    this.value
+  });
+}
 
 class _MovieTabState extends State<MovieTab>{
 
+  List<FilterPanel> _panels;
+  List<CinemaCheckBox> _cinemaBoxes;
+
+  @override
+  void initState() {
+    _cinemaBoxes = [
+      CinemaCheckBox(
+        name: Text('Starmovie Regau'),
+        value: false,
+      ),
+    ];
+
+    _panels = [
+      FilterPanel(
+          isExpanded: true,
+          header: ListTile(
+            leading: Icon(Icons.location_on),
+            title: Text('Location'),
+            dense: true,
+          ),
+          body: Column(
+            children: _cinemaBoxes.map((e) => CheckboxListTile(
+              value: e.value,
+              dense: true,
+              title: e.name,
+              onChanged: (bool value){
+                setState(() {
+                  print(value);
+                  e.value = value;
+                });
+              },
+            )).toList()
+          )
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return SingleChildScrollView(
       child: Container(
         child: ExpansionPanelList(
