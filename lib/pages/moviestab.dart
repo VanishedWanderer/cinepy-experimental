@@ -4,8 +4,8 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:helloworld/repository/facade/movies-facade.dart';
-import 'package:helloworld/repository/model/movie.dart';
+import 'package:gemmakino/repository/facade/movies-facade.dart';
+import 'package:gemmakino/repository/model/movie.dart';
 import 'package:provider/provider.dart';
 class MoviesPage extends StatefulWidget{
   @override

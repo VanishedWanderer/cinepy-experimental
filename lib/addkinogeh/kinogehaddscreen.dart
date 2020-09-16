@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:helloworld/addkinogeh/person-tab.dart';
-import 'package:helloworld/addkinogeh/test-tab.dart';
-import 'package:helloworld/addkinogeh/test-tab2.dart';
-import 'package:helloworld/parallax-tab/parallax-tab-background.dart';
+import 'package:gemmakino/addkinogeh/person-tab.dart';
+import 'package:gemmakino/addkinogeh/test-tab.dart';
+import 'package:gemmakino/addkinogeh/test-tab2.dart';
+import 'package:gemmakino/parallax-tab/parallax-tab-background.dart';
 import 'package:tinycolor/tinycolor.dart';
 
 import 'filmpainter.dart';

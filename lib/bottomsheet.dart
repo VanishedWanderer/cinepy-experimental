@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:helloworld/pages/profilepage.dart';
-import 'package:helloworld/pages/settingspage.dart';
+import 'package:gemmakino/pages/profilepage.dart';
+import 'package:gemmakino/pages/settingspage.dart';
 
 class BottomNav extends StatefulWidget{
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:helloworld/darteye/ObservableList.dart';
-import 'package:helloworld/darteye/ui/ObservingAnimatedList.dart';
+import 'package:gemmakino/darteye/ObservableList.dart';
+import 'package:gemmakino/darteye/ui/ObservingAnimatedList.dart';
 
 class ChipInput<T> extends StatefulWidget {
   const ChipInput({
