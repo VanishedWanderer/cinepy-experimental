@@ -25,6 +25,7 @@ dependencies:
   tinycolor: ^1.0.2
   animations: ^1.1.0
   mobx: ^1.2.1+1
+  date_range_picker: ^1.0.5
   flutter:
     sdk: flutter
 
