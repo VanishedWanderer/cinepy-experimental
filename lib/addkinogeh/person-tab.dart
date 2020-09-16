@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 
-import 'package:helloworld/chips-input/chip-input.dart';
+import 'package:gemmakino/chips-input/chip-input.dart';
 
 
 class PersonTab extends StatelessWidget {

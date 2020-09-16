@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
-import 'package:helloworld/darteye/ObservableMixin.dart';
+import 'package:gemmakino/darteye/ObservableMixin.dart';
 
 typedef CompareBy<T, O extends Comparable<T>> = O Function(T element);
 

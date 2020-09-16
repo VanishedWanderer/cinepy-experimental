@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
-import 'package:helloworld/repository/model/movie.dart';
-import 'package:helloworld/util/collection-util.dart';
+import 'package:gemmakino/repository/model/movie.dart';
+import 'package:gemmakino/util/collection-util.dart';
 import 'package:mobx/mobx.dart';
 
 part 'movies-facade.g.dart'; // flutter pub run build_runner build

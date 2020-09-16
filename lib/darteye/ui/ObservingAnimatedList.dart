@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:helloworld/darteye/ObservableList.dart';
+import 'package:gemmakino/darteye/ObservableList.dart';
 
 class ObservingAnimatedList<T> extends StatefulWidget{
   const ObservingAnimatedList({

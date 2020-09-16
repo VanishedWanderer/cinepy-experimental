@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
-import 'package:helloworld/bottomsheet.dart';
-import 'package:helloworld/pages/friendstab.dart';
-import 'package:helloworld/pages/kinogehtab.dart';
-import 'package:helloworld/pages/moviestab.dart';
-import 'package:helloworld/repository/facade/movies-facade.dart';
-import 'package:helloworld/widgets/kinogehsearchdelegate.dart';
+import 'package:gemmakino/pages/friendstab.dart';
+import 'package:gemmakino/pages/kinogehtab.dart';
+import 'package:gemmakino/pages/moviestab.dart';
+import 'package:gemmakino/repository/facade/movies-facade.dart';
+import 'package:gemmakino/widgets/kinogehsearchdelegate.dart';
 import 'package:provider/provider.dart';
 
 import 'addkinogeh/kinogehaddscreen.dart';
+import 'bottomsheet.dart';
 
 void main() {
   runApp(MyApp());
