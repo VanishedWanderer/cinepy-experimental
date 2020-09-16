@@ -24,8 +24,9 @@ dependencies:
   event_bus: 1.0.1
   tinycolor: ^1.0.2
   animations: ^1.1.0
-  provider: ^4.3.1
+  date_range_picker: ^1.0.5
   mobx: ^1.2.1+1
+  provider: ^4.3.1
   flutter_mobx: ^1.1.0+1
   flutter:
     sdk: flutter

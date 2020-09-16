@@ -1,7 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:gemmakino/addkinogeh/date-tab.dart';
+import 'package:gemmakino/addkinogeh/location-tab.dart';
+import 'package:gemmakino/addkinogeh/movie-tab.dart';
 import 'package:gemmakino/addkinogeh/person-tab.dart';
+import 'package:gemmakino/addkinogeh/screenings-tab.dart';
 import 'package:gemmakino/addkinogeh/test-tab.dart';
 import 'package:gemmakino/addkinogeh/test-tab2.dart';
 import 'package:gemmakino/parallax-tab/parallax-tab-background.dart';
@@ -21,7 +25,7 @@ class _KinoGehAddScreenState extends State<KinoGehAddScreen> with SingleTickerPr
   @override
   void initState() {
     super.initState();
-    _tabController = new TabController(length: 3, vsync: this);
+    _tabController = new TabController(length: 5, vsync: this);
   }
 
   @override
@@ -52,8 +56,10 @@ class _KinoGehAddScreenState extends State<KinoGehAddScreen> with SingleTickerPr
                     controller: _tabController,
                     children: [
                       KinoStep(child: PersonTab(), nextPressHandler: () => _tabController.animateTo(1)),
-                      KinoStep(child: TestTab(), nextPressHandler: () => _tabController.animateTo(2)),
-                      KinoStep(child: TestTab2()),
+                      KinoStep(child: LocationTab(), nextPressHandler: () => _tabController.animateTo(2),),
+                      KinoStep(child: DateTab(), nextPressHandler: () => _tabController.animateTo(3),),
+                      KinoStep(child: MovieTab(), nextPressHandler: () => _tabController.animateTo(4),),
+                      KinoStep(child: ScreeningsTab()),
                     ],
                   ),
                 ]
@@ -95,9 +101,11 @@ class ClippedTabBar extends StatelessWidget {
         child: TabBar(
           controller: tabController,
           tabs: [
-            Tab(icon: Icon(Icons.person_add, color: this.colorIcon)),
-            Tab(icon: Icon(Icons.local_movies, color: this.colorIcon)),
-            Tab(icon: Icon(Icons.share, color: this.colorIcon)),
+            Tab(icon: Icon(Icons.person_add, color: this.colorIcon,)),
+            Tab(icon: Icon(Icons.location_on, color: this.colorIcon,)),
+            Tab(icon: Icon(Icons.calendar_today, color: this.colorIcon,)),
+            Tab(icon: Icon(Icons.movie, color: this.colorIcon)),
+            Tab(icon: Icon(Icons.local_movies, color: this.colorIcon,)),
           ],
         ),
       ),
@@ -115,8 +123,10 @@ class ClippedTabBar extends StatelessWidget {
                 controller: tabController,
                 tabs: [
                   Tab(icon: Icon(Icons.person_add, color: this.colorIconFilled)),
+                  Tab(icon: Icon(Icons.location_on, color: this.colorIconFilled)),
+                  Tab(icon: Icon(Icons.calendar_today, color: this.colorIconFilled)),
+                  Tab(icon: Icon(Icons.movie, color: this.colorIconFilled)),
                   Tab(icon: Icon(Icons.local_movies, color: this.colorIconFilled)),
-                  Tab(icon: Icon(Icons.share, color: this.colorIconFilled)),
                 ],
               ),
             ),
