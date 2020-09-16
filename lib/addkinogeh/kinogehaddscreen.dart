@@ -1,14 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:helloworld/addkinogeh/date-tab.dart';
-import 'package:helloworld/addkinogeh/location-tab.dart';
-import 'package:helloworld/addkinogeh/movie-tab.dart';
-import 'package:helloworld/addkinogeh/person-tab.dart';
-import 'package:helloworld/addkinogeh/screenings-tab.dart';
-import 'package:helloworld/addkinogeh/test-tab.dart';
-import 'package:helloworld/addkinogeh/test-tab2.dart';
-import 'package:helloworld/parallax-tab/parallax-tab-background.dart';
+import 'package:gemmakino/addkinogeh/date-tab.dart';
+import 'package:gemmakino/addkinogeh/location-tab.dart';
+import 'package:gemmakino/addkinogeh/movie-tab.dart';
+import 'package:gemmakino/addkinogeh/person-tab.dart';
+import 'package:gemmakino/addkinogeh/screenings-tab.dart';
+import 'package:gemmakino/addkinogeh/test-tab.dart';
+import 'package:gemmakino/addkinogeh/test-tab2.dart';
+import 'package:gemmakino/parallax-tab/parallax-tab-background.dart';
 import 'package:tinycolor/tinycolor.dart';
 
 import 'filmpainter.dart';
@@ -145,7 +145,7 @@ class KinoStep extends StatelessWidget {
     this.nextPressHandler
   }): super();
   final Widget child;
-  final nextPressHandler;
+  final Function nextPressHandler;
 
   @override
   Widget build(BuildContext context) {

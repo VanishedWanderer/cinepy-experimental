@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
-import 'package:helloworld/bottomsheet.dart';
-import 'package:helloworld/pages/friendstab.dart';
-import 'package:helloworld/pages/kinogehtab.dart';
-import 'package:helloworld/pages/moviestab.dart';
-import 'package:helloworld/widgets/kinogehsearchdelegate.dart';
+import 'package:gemmakino/pages/friendstab.dart';
+import 'package:gemmakino/pages/kinogehtab.dart';
+import 'package:gemmakino/pages/moviestab.dart';
+import 'package:gemmakino/repository/facade/movies-facade.dart';
+import 'package:gemmakino/widgets/kinogehsearchdelegate.dart';
+import 'package:provider/provider.dart';
 
 import 'addkinogeh/kinogehaddscreen.dart';
+import 'bottomsheet.dart';
 
 void main() {
   runApp(MyApp());
@@ -53,77 +55,86 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              SafeArea(
-                child: Container(
-                  child: TabBar(
-                    tabs: <Widget>[
-                      Tab(icon: Icon(Icons.movie),),
-                      Tab(icon: Icon(Icons.theaters),),
-                      Tab(icon: Icon(Icons.people),),
-                    ],
+    return MultiProvider(
+      providers: genProviders(),
+      child: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SafeArea(
+                  child: Container(
+                    child: const TabBar(
+                      tabs: <Widget>[
+                        Tab(icon: Icon(Icons.movie),),
+                        Tab(icon: Icon(Icons.theaters),),
+                        Tab(icon: Icon(Icons.people),),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: TabBarView(
-                    children: <Widget>[
-                      KinogehPage(),
-                      MoviesPage(),
-                      FriendsPage(),
-                    ],
+                Expanded(
+                  child: TabBarView(
+                      children: <Widget>[
+                        KinogehPage(),
+                        MoviesPage(),
+                        FriendsPage(),
+                      ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        floatingActionButton: OpenContainer(
-          openBuilder: (BuildContext context, VoidCallback _) {
-            return KinoGehAddScreen();
-          },
-          closedElevation: 6.0,
-          closedShape: ContinuousRectangleBorder(
-            borderRadius: BorderRadius.circular(56 / 2),
-          ),
-          closedColor: Theme.of(context).primaryColor,
-          closedBuilder: (BuildContext context, VoidCallback openContainer) {
-            return SizedBox(
-              height: 56,
-              width: 56,
-              child: Center(
-                child: Icon(
-                  Icons.movie,
-                  color: Theme.of(context).primaryIconTheme.color,
+          floatingActionButton: OpenContainer(
+            openBuilder: (BuildContext context, VoidCallback _) {
+              return KinoGehAddScreen();
+            },
+            closedElevation: 6.0,
+            closedShape: ContinuousRectangleBorder(
+              borderRadius: BorderRadius.circular(56 / 2),
+            ),
+            closedColor: Theme.of(context).primaryColor,
+            closedBuilder: (BuildContext context, VoidCallback openContainer) {
+              return SizedBox(
+                height: 56,
+                width: 56,
+                child: Center(
+                  child: Icon(
+                    Icons.movie,
+                    color: Theme.of(context).primaryIconTheme.color,
+                  ),
                 ),
-              ),
-            );
-          },
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: BottomAppBar(
-          shape: AutomaticNotchedShape(RoundedRectangleBorder(),ContinuousRectangleBorder(borderRadius: BorderRadius.circular(28.0))),
-          notchMargin: 6.0,
-          child: Row(
-            children: [
-              IconButton(icon: Icon(Icons.menu),color: Theme.of(context).accentIconTheme.color, onPressed: () {
-                showModalBottomSheet(context: context, builder: (BuildContext context){
-                  return BottomNav();
-                });
-              },),
-              Spacer(),
-              IconButton(icon: Icon(Icons.search), onPressed: () {
-                showSearch(context: context, delegate: KinogehSearchDelegate());
-              }, color: Theme.of(context).accentIconTheme.color,),
-            ],
+              );
+            },
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: BottomAppBar(
+            shape: AutomaticNotchedShape(const RoundedRectangleBorder(),ContinuousRectangleBorder(borderRadius: BorderRadius.circular(28.0))),
+            notchMargin: 6.0,
+            child: Row(
+              children: [
+                IconButton(icon: const Icon(Icons.menu),color: Theme.of(context).accentIconTheme.color, onPressed: () {
+                  showModalBottomSheet<BottomNav>(context: context, builder: (BuildContext context){
+                    return BottomNav();
+                  });
+                },),
+                Spacer(),
+                IconButton(icon: const Icon(Icons.search), onPressed: () {
+                  showSearch<dynamic>(context: context, delegate: KinogehSearchDelegate());
+                }, color: Theme.of(context).accentIconTheme.color,),
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  List<Provider<dynamic>> genProviders() {
+    return [
+      Provider<MoviesFacade>(create: (_) => MoviesMockFacade())
+    ];
   }
 }

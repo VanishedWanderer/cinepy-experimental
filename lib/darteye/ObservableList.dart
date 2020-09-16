@@ -1,9 +1,9 @@
   import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
-import 'package:helloworld/darteye/ObservableMixin.dart';
+import 'package:gemmakino/darteye/ObservableMixin.dart';
 
-typedef CompareBy<T, O extends Comparable> = O Function(T element);
+typedef CompareBy<T, O extends Comparable<T>> = O Function(T element);
 
 enum ChangeType {
   ADD,
@@ -60,9 +60,10 @@ class ObservableList<T> with ListMixin<T>, ObservableMixin<ChangeEventArgs<T>>{
 
   @override
   bool remove(Object element) {
-    var index = _list.indexOf(element);
+    assert(element is T);
+    var index = _list.indexOf(element as T);
     if(index >= 0){
-      notifyChanged(ChangeEventArgs(index: index, type: ChangeType.REMOVE, item: element));
+      notifyChanged(ChangeEventArgs(index: index, type: ChangeType.REMOVE, item: element as T));
     }
     return index >= 0;
   }
@@ -74,7 +75,7 @@ class ObservableList<T> with ListMixin<T>, ObservableMixin<ChangeEventArgs<T>>{
     return element;
   }
 
-  void morphTo<O extends Comparable>(List<T> other){
+  void morphTo<O extends Comparable<T>>(List<T> other){
     int myIndex = 0;
     int otherIndex = 0;
 
@@ -85,22 +86,22 @@ class ObservableList<T> with ListMixin<T>, ObservableMixin<ChangeEventArgs<T>>{
         myIndex++;
         otherIndex++;
       }else{
-        if(this.contains(other[otherIndex])){
+        if(contains(other[otherIndex])){
           while(this[myIndex] != other[otherIndex]){ //No ioub should be possible
-            this.removeAt(myIndex);
+            removeAt(myIndex);
           }
         }else{
-          this.insert(myIndex, other[otherIndex]);
+          insert(myIndex, other[otherIndex]);
           myIndex++;
           otherIndex++;
         }
       }
     }
     while(myIndex < length){
-      this.removeAt(myIndex);
+      removeAt(myIndex);
     }
     while(otherIndex < other.length){
-      this.insert(myIndex, other[otherIndex]);
+      insert(myIndex, other[otherIndex]);
       myIndex++;
       otherIndex++;
     }

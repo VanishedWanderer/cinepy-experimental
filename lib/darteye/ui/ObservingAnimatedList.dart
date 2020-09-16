@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:helloworld/darteye/ObservableList.dart';
+import 'package:gemmakino/darteye/ObservableList.dart';
 
 class ObservingAnimatedList<T> extends StatefulWidget{
   const ObservingAnimatedList({
@@ -9,16 +9,16 @@ class ObservingAnimatedList<T> extends StatefulWidget{
     this.removeItemBuilder
   });
 
-  final AddItemBuilder itemBuilder;
-  final RemoveItemBuilder removeItemBuilder;
+  final AddItemBuilder<T> itemBuilder;
+  final RemoveItemBuilder<T> removeItemBuilder;
   final ObservableList<T> list;
 
   @override
   State<StatefulWidget> createState() => _ObservingAnimatedListState<T>();
 }
 
-typedef AddItemBuilder<T> = Widget Function(BuildContext context, int index, Animation animation);
-typedef RemoveItemBuilder<T> = Widget Function(BuildContext context, T item, Animation animation);
+typedef AddItemBuilder<T> = Widget Function(BuildContext context, int index, Animation<double> animation);
+typedef RemoveItemBuilder<T> = Widget Function(BuildContext context, T item, Animation<double> animation);
 
 class _ObservingAnimatedListState<T> extends State<ObservingAnimatedList<T>> {
 

@@ -1,8 +1,8 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:helloworld/darteye/ObservableList.dart';
-import 'package:helloworld/darteye/ui/ObservingAnimatedList.dart';
+import 'package:gemmakino/darteye/ObservableList.dart';
+import 'package:gemmakino/darteye/ui/ObservingAnimatedList.dart';
 
 class TestTab2 extends StatefulWidget {
   @override
@@ -12,7 +12,7 @@ class TestTab2 extends StatefulWidget {
 
 class _TestTabState2 extends State<TestTab2> {
 
-  ObservableList<String> _items = ObservableList(List());
+  final ObservableList<String> _items = ObservableList([]);
   int counter = 0;
 
   @override
@@ -31,12 +31,12 @@ class _TestTabState2 extends State<TestTab2> {
                 ),
               );
             },
-            removeItemBuilder: (context, item, animation) {
+            removeItemBuilder: (context, String item, animation) {
               return SizeTransition(
                 axis: Axis.vertical,
                 sizeFactor: animation,
                 child: Card(
-                  child: Text("Removing $item"),
+                  child: Text('Removing $item'),
                 ),
               );
             },
