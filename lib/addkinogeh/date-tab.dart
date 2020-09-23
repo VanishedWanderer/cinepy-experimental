@@ -1,8 +1,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class DateTab extends StatefulWidget{
+
   @override
   State<StatefulWidget> createState() => _DateTabState();
 }
@@ -12,54 +14,81 @@ class _DateTabState extends State<DateTab>{
   DateTimeRange pickedDate;
   TimeOfDay pickedTimeFrom;
   TimeOfDay pickedTimeTo;
+  Text timeToText = const Text('Bis');
+  Text timeFromText = const Text('Von');
+  Text dateText = const Text('Datum');
+  DateFormat dateFormat = DateFormat('dd.MM.yy');
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Column(
       children: [
         Center(
           child: FlatButton(
-            child: Text(pickedDate.toString()),
+            child: dateText,
             onPressed: () async {
               pickedDate = await showDateRangePicker(
                 context: context,
-                firstDate: new DateTime(DateTime.now().year),
-                lastDate: new DateTime(DateTime.now().year+2),
-                initialDateRange: new DateTimeRange(start: new DateTime.now(), end: (new DateTime.now()).add(new Duration(days: 3))),
-                saveText: "Speichern",
-                helpText: "Datum auswählen",
-                fieldStartHintText: "tt.mm.jjjj",
-                fieldEndHintText: "tt.mm.jjjj",
-                fieldStartLabelText: "Startdatum",
-                fieldEndLabelText: "Enddatum",
-                confirmText: "OK",
-                cancelText: "Abbrechen",
-                errorInvalidRangeText: "Ungültige Daten"
+                firstDate: DateTime(DateTime.now().year),
+                lastDate: DateTime(DateTime.now().year+2),
+                initialDateRange: DateTimeRange(start: DateTime.now(), end: DateTime.now().add(const Duration(days: 3))),
+                saveText: 'Speichern',
+                helpText: 'Datum auswählen',
+                fieldStartHintText: 'tt.mm.jjjj',
+                fieldEndHintText: 'tt.mm.jjjj',
+                fieldStartLabelText: 'Startdatum',
+                fieldEndLabelText: 'Enddatum',
+                confirmText: 'OK',
+                cancelText: 'Abbrechen',
+                errorInvalidRangeText: 'Ungültige Daten'
               );
+              setState(() {
+                if(pickedDate != null){
+                  dateText = Text(dateFormat.format(pickedDate.start) + ' - ' + dateFormat.format(pickedDate.end));
+                }
+                else{
+                  dateText = const Text('Datum');
+                }
+              });
             },
           ),
         ),
-        Divider(),
+        const Divider(),
         Center(
           child: FlatButton(
-            child: Text(pickedTimeFrom.toString()),
+            child: timeFromText,
             onPressed: () async {
               pickedTimeFrom = await showTimePicker(
                 context: context,
                 initialTime: TimeOfDay.now(),
               );
+              setState(() {
+                if(pickedTimeFrom != null){
+                  timeFromText = Text(pickedTimeFrom.format(context));
+                }
+                else{
+                  timeFromText = const Text('Von');
+                }
+              });
             },
           ),
         ),
         Center(
           child: FlatButton(
-            child: Text(pickedTimeTo.toString()),
+            child: timeToText,
             onPressed: () async {
               pickedTimeTo = await showTimePicker(
                 context: context,
                 initialTime: TimeOfDay.now(),
               );
+              setState(() {
+                if(pickedTimeTo != null){
+                  timeToText = Text(pickedTimeTo.format(context));
+                }
+                else{
+                  timeToText = const Text('Bis');
+                }
+              });
             },
           ),
         )
