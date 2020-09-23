@@ -36,7 +36,10 @@ class _KinogehPageState extends State<KinogehPage>{
                     onTap: openTile,
                     child: ListTile(
                       leading: const Icon(Icons.movie_filter,),
-                      title: const Text('Date for Kinogeh löl'),
+                      title: Hero(
+                          tag: heroTagName,
+                          child: const Text('Date for Kinogeh löl')
+                      ),
                       subtitle: Text(items[index],),
                     ),
                   );

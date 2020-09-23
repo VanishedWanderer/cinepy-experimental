@@ -23,14 +23,7 @@ class _VotingScreenState extends State<VotingScreen> {
             snap: false,
             title: Hero(
               tag: widget.text,
-              child:
-                const Material(
-                    type: MaterialType.transparency,
-                    textStyle: TextStyle(fontWeight: FontWeight.bold,
-                        fontSize: 10,
-                        color: Colors.black),
-                    child: Text('Date for Kinogeh löl')
-                )
+              child: Text('Date for Kinogeh löl')
             ),
           ),
           SliverList(delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
