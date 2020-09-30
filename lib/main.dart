@@ -3,6 +3,7 @@ import 'package:animations/animations.dart';
 import 'package:gemmakino/pages/friendstab.dart';
 import 'package:gemmakino/pages/kinogehtab.dart';
 import 'package:gemmakino/pages/moviestab.dart';
+import 'package:gemmakino/repository/BackendAdapter.dart';
 import 'package:gemmakino/repository/facade/movies-facade.dart';
 import 'package:gemmakino/widgets/kinogehsearchdelegate.dart';
 import 'package:provider/provider.dart';
@@ -134,7 +135,7 @@ class _HomePageState extends State<HomePage> {
 
   List<Provider<dynamic>> genProviders() {
     return [
-      Provider<MoviesFacade>(create: (_) => MoviesMockFacade())
+      Provider<MoviesFacade>(create: (_) => MoviesGraphQlFacade())
     ];
   }
 }
